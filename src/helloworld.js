@@ -1,2 +1,10 @@
 
-module.exports = ['world', '世界', 'react!'];
+import React from 'react';
+
+class HelloWorld extends React.Component {
+    render() {
+        return <p> Hello React! </p>;
+    }
+};
+
+export default HelloWorld;

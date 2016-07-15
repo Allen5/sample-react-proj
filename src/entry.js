@@ -1,18 +1,14 @@
 import React from 'react';
 import { render } from 'react-dom';
+import HelloWorld from './helloworld';
+import TestApp from './test';
 
 import { Router, Route, hashHistory } from 'react-router';
 
-class App extends React.Component {
-    render() {
-        return <p> Hello { this.props.name } </p>;
-    }
-}
-
+// 定义路由
 render(
     (<Router history={ hashHistory }>
-        <Route path="/" component={ App } />
+        <Route path="/" component={ HelloWorld } />
+        <Route path="/test" component={ TestApp } />
     </Router>), document.getElementById('app')
 );
-
-//render(<App name="React!!" />, document.getElementById('app') );
