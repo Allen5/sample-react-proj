@@ -4,11 +4,11 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        app: './src/entry.js'
+        app: './source/app.js'
     },
     output: {
-        path: path.resolve(__dirname, "/assets"),
-        publicPath: '/assets/',
+        path: path.resolve(__dirname, "/build"),
+        publicPath: '/build/',
         filename: 'bundle.js'
     },
     module: {
