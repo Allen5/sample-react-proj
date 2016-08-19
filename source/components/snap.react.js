@@ -1,60 +1,68 @@
 // snap tweet Application 组件
 
 import React from 'react';
-import Stream from './stream.react';
+import Stream from './Stream.react';
 import Collection from './collection.react';
 
-let Application = React.createClass({
+class Application extends React.Component {
 
-  getInitialState: () => {
-  	return {
-  		collectionTweets: {}
-  	};
-  },
+  constructor(props) {
+	super(props);
 
-  addTweetToCollection: (tweet) => {
-  	let collectionTweets = this.state.collectionTweets;
-  	collectionTweets[tweet.id] = tweet;
-  	this.setState({
-  		collectionTweets: collectionTweets
-  	});
-  },
+	//必须有this.state
+	this.state = {
+	  collectionTweets: {}
+	};
 
-  removeTweetFromCollection: (tweet) => {
-  	let collectionTweets = this.state.collectionTweets;
-  	delete collectionTweets[tweet.id];
-  	this.setState({
-  		collectionTweets: collectionTweets
-  	});
-  },
+	//设置事件绑定
+	this.addTweetToCollection = this.addTweetToCollection.bind(this);
+	this.removeTweetFromCollection = this.removeTweetFromCollection.bind(this);
+	this.removeAllTweetsFromCollection = this.removeAllTweetsFromCollection.bind(this);
+  }
 
-  removeAllTweetsFromCollection: () => {
-  	this.setState({
-  		collectionTweets: {}
-  	});
-  },
+  addTweetToCollection(tweet) {
+	let collectionTweets = this.state.collectionTweets;
+	collectionTweets[tweet.id] = tweet;
+	this.setState({
+	  collectionTweets: collectionTweets
+	});
+  }
 
-  render: () => {
+  removeTweetFromCollection(tweet) {
+	let collectionTweets = this.state.collectionTweets;
+	delete collectionTweets[tweet.id];
+	this.setState({
+	  collectionTweets: collectionTweets
+	});
+  }
+
+  removeAllTweetsFromCollection() {
+	this.setState({
+	  collectionTweets: {}
+	});
+  }
+
+  render() {
 	return (
 		<div className="container-fluid">
-			<div className="row">
-				<div className="col-md-4 text-center">
-					<Stream
-						onAddTweetToCollection={ this.addTweetToCollection }						
-						/>
-				</div>
+	  		<div className="row">
+	  			<div className="col-md-4 text-center">
+	  				<Stream
+						onAddTweetToCollection={ this.addTweetToCollection }
+	  				/>
+	  			</div>
 				<div className="col-md-8">
 					<Collection
 						tweets={ this.state.tweets }
 						onRemoveTweetFromCollection={ this.removeTweetFromCollection }
 						onRemoveAllTweetsFromCollection={ this.removeAllTweetsFromCollection }
-						/>
+					/>
 				</div>
-			</div>
+	  		</div>
 		</div>
 	);
   }
   
-});
+};
 
-module.exports = Application;
+export default Application;

@@ -16,40 +16,24 @@ let imageStyle = {
   border: '1px solid #fff'
 };
 
-let tweet = React.createClass({
+class Tweet extends React.Component {
 
-  //验证必须传入props的参数
-  propTypes: {
+  constructor(props) {
+	super(props);
 
-	tweet: ( properties, propertyName, componentName ) => {
+	//绑定事件
+	this.handlerImageClick = this.handleImageClick.bind(this);
+  }
 
-	  let tweet = properties[propertyName];
-
-	  if ( !tweet ) {
-		return new Error("Tweet must be set. ");
-	  }
-
-	  if ( !tweet.media ) {
-		return new Error("Tweet must have an image");
-	  }
-	  
-	},
-	
-	onImageClick: React.PropTypes.func
-	
-  },
-
-  //处理图片点击事件
-  handleImageClick: () => {
+  handlerImageClick() {
 	let tweet = this.props.tweet;
 	let onImageClick = this.props.onImageClick;
 	if ( onImageClick ) {
 	  onImageClick(tweet);
 	}
-  },
+  }
 
-  //渲染
-  render: () => {
+  render() {
 	
 	let tweet = this.props.tweet;
 	let tweetMediaUrl = tweet.media[0].url;
@@ -61,6 +45,24 @@ let tweet = React.createClass({
 	);
   }
   
-});
+};
 
-module.exports = tweet;
+Tweet.propTypes = {
+
+  tweet: ( properties, propertyName, componentName ) => {
+
+	let tweet = properties[propertyName];
+	
+	if ( !tweet ) {
+	  return new Error("Tweet must be set. ");
+	}
+	
+	if ( !tweet.media ) {
+	  return new Error("Tweet must have an image");
+	}
+	
+  },
+  onImageClick: React.PropTypes.func
+};
+
+export default Tweet;

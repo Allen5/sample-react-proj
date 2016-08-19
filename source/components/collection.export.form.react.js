@@ -2,12 +2,25 @@
 
 import React from 'react';
 
-let collectionExportForm = React.createClass({
+let formStyle = {
+  display:"inline-block"
+};
 
-  render: () => {
+class CollectionExportForm extends React.Component {
 
+  constructor(props) {
+	super(props);
+  }
+
+  render() {
+	return (
+		<form action="http://codepen.io/pen/define" method="POST" target="_blank" style="formStyle">
+			<input type="hidden" name="data" value={this.props.htmlMarkup} />
+			<button type="submit" className="btn btn-default">Export as HTML</button>
+		</form>
+	);
   }
   
-});
+};
 
-module.exports = collectionExportForm;
+export default CollectionExportForm;

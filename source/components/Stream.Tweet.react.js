@@ -4,36 +4,35 @@ import React from 'react';
 import Header from './header.react';
 import Tweet from './tweet.react';
 
-let component = React.createClass({
+class StreamTweet extends React.Component {
 
-  getInitialState: () => {
-	return {
+  constructor(props) {
+	super(props);
+
+	this.state = {
 	  headerText: "",
 	  numberOfCharactersIsIncreasing: false
 	};
-  },
+  }
 
-  componentWillMount: () => {
+  componentWillMount() {
 	this.setState({
-	  numberOfCharactersIsIncreasing: true,
-	  headerText: "Last tweet photos"
+	  headerText: "Last Tweet Photos",
+	  numberOfCharactersIsIncreasing: true	  
 	});
-  },
+  }
 
-  render: () => {
-
+  render() {
 	return (
 		<section>
 			<Header text={ this.state.headerText } />
 			<Tweet
 				tweet={ this.props.tweet }
-				onImageClick={ this.props.addTweetToCollection }
+				onImageClick={ this.props.onAddTweetToCollection }
 				/>
-		</section>
-	);
-	
+		</section>);
   }
   
-});
+};
 
-module.exports = component;
+export default StreamTweet;

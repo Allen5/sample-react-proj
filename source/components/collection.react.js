@@ -2,35 +2,45 @@
 
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import CollectionControls from './collection.controls.react';
-import TweetList from './tweet.list.react';
-import Header from './header.react';
+import CollectionControls from './Collection.Controls.react';
+import TweetList from './Tweet.List.react';
+import Header from './Header.react';
 
-let collection = React.createClass({
+class Collection extends React.Component {
 
-  //创建导出的html标签
-  createHtmlMarkupStringOfTweetList: () => {
+  constructor(props) {
+	super(props);
+
+	//绑定事件
+	this.createHtmlMarkupStringOfTweetList = this.createHtmlMarkupStringOfTweetList.bind(this);
+	this.getListOfTweetsId = this.getListOfTweetsId.bind(this);
+	this.getNumberOfTweetsInCollection = this.getNumberOfTweetsInCollection.bind(this);
+  }
+
+  createHtmlMarkupStringOfTweetList() {
+	
 	let htmlstring = ReactDOMServer.renderToStaticMarkup(
 		<TweetList tweets={this.props.tweets} />
 	);
-
+	
 	let htmlMarkup = {
 	  html: htmlstring
 	};
-	return JSON.sringify(htmlMarkup);
-  },
+	
+	return JSON.stringify(htmlMarkup);
+	
+  }
 
-  getListOfTweetsId: () => {
+  getListOfTweetsId() {
+	if ( !this.props.tweets ) return [];
 	return Object.keys(this.props.tweets);
-  },
+  }
 
-  //获取推文个数
-  getNumberOfTweetsInCollection: () => {
+  getNumberOfTweetsInCollection() {
 	return this.getListOfTweetsId().length;
-  },
+  }
 
-  render: () => {
-
+  render() {
 	let numberOfTweetsInCollection = this.getNumberOfTweetsInCollection();
 
 	if ( numberOfTweetsInCollection > 0 ) {
@@ -53,7 +63,7 @@ let collection = React.createClass({
 
 	return <Header text="Your collection is empty!" />;
   }
+  
+};
 
-});
-
-module.exports = collection;
+export default Collection;

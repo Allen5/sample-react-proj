@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import HelloWorld from './components/helloworld';
 import TestApp from './components/test';
-import SnapApp from './components/snap.react';
+import SnapApp from './components/Snap.react';
 import { Router, Route, hashHistory } from 'react-router';
 
 // 定义路由

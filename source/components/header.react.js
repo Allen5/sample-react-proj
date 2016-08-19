@@ -9,18 +9,20 @@ let headerStyle = {
   margin: '20px 10px'
 };
 
-let header = React.createClass({
+class Header extends React.Component {
 
-  getDefaultProps: () => {
-	return {
-	  text: "Default Header"
-	};
-  },
-  
-  render: () => {
-	return <h2 style={ headerStyle } >{ this.props.text}</h2>;
+  constructor(props) {
+	super(props);
+  }
+
+  render() {
+	return <h2 style={headerStyle}>{ this.props.text } </h2>;
   }
   
-});
+};
 
-module.exports = header;
+Header.defaultProps = {
+  text: 'Default Header'
+};
+
+export default Header;

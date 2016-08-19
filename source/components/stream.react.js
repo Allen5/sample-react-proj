@@ -1,41 +1,46 @@
 // 推文消息展示组件
 
 import React from 'react';
-import Header from './header.react';
-import StreamTweet from './streamtweet.react';
-import SnapkiteStreamClient from 'snapkit-stream-client';
+import Header from './Header.react';
+import StreamTweet from './Stream.Tweet.react';
+import SnapkiteStreamClient from 'snapkite-stream-client';
 
-let stream = React.createClass({
+class Stream extends React.Component {
 
-  getInitialState: () => {
-	return {
+  constructor(props) {
+	super(props);
+
+	this.state = {
 	  tweet: null
 	};
-  },
 
-  componentDidMount: () => {
+	//绑定事件
+	this.handleNewTweet = this.handleNewTweet.bind(this);
+  }
+
+  componentDidMout() {
 	SnapkiteStreamClient.initializeStream(this.handleNewTweet);
-  },
+  }
 
-  componentWillUnmount: () => {
+  componentWillUnmount() {
 	SnapkiteStreamClient.destroyStream();
-  },
+  }
 
-  handleNewTweet: (tweet) => {
+  handleNewTweet(tweet) {
 	this.setState({
 	  tweet: tweet
 	});
-  },
+  }
 
-  render: () => {
-
+  render() {
+	
 	let tweet = this.state.tweet;
 
 	if ( tweet ) {
 	  return (
 		  <StreamTweet
 			tweet={ tweet }
-			onAddTweetToCollection={ this.props.addTweetToCollection }
+			onAddTweetToCollection={ this.props.onAddTweetToCollection }
 		  	/>
 	  );
 	}
@@ -43,6 +48,6 @@ let stream = React.createClass({
 	return <Header text="Waiting for public photos from Twitter..." />;
   }
   
-});
+};
 
-module.exports = stream;
+export default Stream;

@@ -2,21 +2,27 @@
 
 import React from 'react';
 import Button from './button.react';
-import Header from './header.react';
-import CollectionRenameForm from './collection.rename.form.react';
-import CollectionExportForm from './collection.export.form.react';
+import Header from './Header.react';
+import CollectionRenameForm from './Collection.Rename.Form.react';
+import CollectionExportForm from './Collection.Export.Form.react';
 
-let collectionControls = React.createClass({
+class CollectionControls extends React.Component {
 
-  getInitialState: () => {
-	return {
+  constructor(props) {
+	super(props);
+	//绑定事件
+
+	this.state = {
 	  isEdittingName: false,
 	  name: "Default Collection"
 	};
-  },
 
-  //获取header的文本显示
-  getHeaderText: () => {
+	this.getHeaderText = this.getHeaderText.bind(this);
+	this.changeCollectionName = this.changeCollectionName.bind(this);
+	this.toggleEditCollectorName = this.toggleEditCollectorName.bind(this);
+  }
+
+  getHeaderText() {
 	let numberOfTweetsInCollection = this.props.numberOfTweetsInCollection;
 	let text = numberOfTweetsInCollection;
 	if ( numberOfTweetsInCollection == 1 ) {
@@ -27,27 +33,26 @@ let collectionControls = React.createClass({
 
 	return (
 		<span>
-			{text} <strong>{this.state.name}</strong> collection
+		{text} <strong>{this.state.name}</strong> collection
 		</span>
 	);
-  },
+  }
 
-  changeCollectionName: (name) => {
+  changeCollectionName(name) {
 	this.setState({
 	  name: name,
 	  isEdittingName: false
 	});
-  },
+  }
 
-  toggleEditCollectionName: () => {
+  toggleEditCollectorName() {
 	this.setState({
 	  isEdittingName: !this.state.isEdittingName
 	});
-  },
+  }
 
-  render: () => {
-
-  	//编辑视图
+  render() {
+	  	//编辑视图
   	if ( this.state.isEdittingName ) {
 	  return (
 		  <CollectionExportForm 
@@ -80,7 +85,6 @@ let collectionControls = React.createClass({
   		</div>
   	);
   }
+};
 
-});
-
-module.exports = collectionControls;
+export default CollectionControls;

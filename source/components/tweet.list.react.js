@@ -1,6 +1,6 @@
 // tweetlist 组件
 import React from 'react';
-import Tweet from './tweet.react';
+import Tweet from './Tweet.react';
 
 let listItemStyle = {
   display: 'inline-block',
@@ -11,43 +11,46 @@ let listStyle = {
   padding: '0'
 };
 
-let tweetList = React.createClass({
+class TweetList extends React.Component {
 
-  getListOfTweetIds: () => {
+  constructor(props) {
+	super(props);
+
+	//绑定事件
+	this.getListOfTweetIds = this.getListOfTweetIds.bind(this);
+	this.getTweetElement = this.getTweetElement.bind(this);
+  }
+
+  getListOfTweetIds() {
 	return Object.keys(this.props.tweets);
-  },
+  }
 
-  getTweetElement: (tweetId) => {
+  getTweetElement(tweetId) {
 
 	let tweet = this.props.tweets[tweetId];
-
 	let element;
-	if ( this.props.onRemoveTweetFromCollection ) {
+	if (this.props.onRemoveAllTweetsFromCollection ) {
 	  element = (
-		  <Tweet
-		  	tweet={ tweet }
-		  	onImageClick={this.props.onRemoveTweetFromCollection}
-		  	/>
+		  <Tweet tweet={tweet} onImageClick={this.props.onRemoveTweetFromCollection} />
 	  );
 	} else {
 	  element = (
-		<Tweet 
-			tweet={ tweet } />
+		  <Tweet tweet={ tweet } />
 	  );
 	}
 
-	return <li style="listItemStyle" key={tweet.id}>{element}</li>;
-  },
-
-  render: ()=> {
-  	let tweetsElements = this.getListOfTweetIds().map(this.getTweetElement);
-	return (
-	  <ul style={listStyle}>
-	  	{tweetsElements}
-	  </ul>
-	);
+	return <li style={listItemStyle} key={tweet.id}>{element}</li>;
   }
 
-});
+  render() {
+	let tweetsElements = this.getListOfTweetIds().map(this.getTweetElement);
+	return (
+		<ul style={listStyle}>
+			{tweetsElements}
+		</ul>
+	);
+  }
+  
+};
 
-module.eports = tweetList;
+export default TweetList;
