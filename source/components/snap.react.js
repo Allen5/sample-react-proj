@@ -9,7 +9,7 @@ class Application extends React.Component {
   constructor(props) {
 	super(props);
 
-	//必须有this.state
+	//必须有this.state>
 	this.state = {
 	  collectionTweets: {}
 	};
